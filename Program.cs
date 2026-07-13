@@ -52,4 +52,4 @@ app.MapControllerRoute(
 app.MapRazorPages()
    .WithStaticAssets();
 
-app.Run(); ;
+app.Run(); 
