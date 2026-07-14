@@ -1,8 +1,210 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="p-5 mb-4 bg-primary text-white rounded-3 shadow">
+    <div class="container-fluid py-3">
+
+        <h1 class="display-4 fw-bold">
+            🎓 Sistema de Matrícula Universitaria
+        </h1>
+
+        <p class="lead">
+            Bienvenido al sistema de administración académica.
+        </p>
+
+        <hr />
+
+        <p>
+            Administre carreras, cursos, docentes, estudiantes y matrículas
+            desde una plataforma desarrollada con ASP.NET Core MVC.
+        </p>
+
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-3">
+
+        <div class="card shadow h-100 text-center">
+
+            <div class="card-body">
+
+                <h1>🎓</h1>
+
+                <h4 class="mt-3">
+                    Carreras
+                </h4>
+
+                <p class="text-muted">
+
+                    Administración de carreras universitarias.
+
+                </p>
+
+                <a asp-controller="Carreras"
+                   asp-action="Index"
+                   class="btn btn-primary">
+
+                    Administrar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card shadow h-100 text-center">
+
+            <div class="card-body">
+
+                <h1>📘</h1>
+
+                <h4 class="mt-3">
+                    Cursos
+                </h4>
+
+                <p class="text-muted">
+
+                    Administración de cursos.
+
+                </p>
+
+                <a asp-controller="Cursos"
+                   asp-action="Index"
+                   class="btn btn-success">
+
+                    Administrar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card shadow h-100 text-center">
+
+            <div class="card-body">
+
+                <h1>👨‍🎓</h1>
+
+                <h4 class="mt-3">
+                    Estudiantes
+                </h4>
+
+                <p class="text-muted">
+
+                    Próximamente.
+
+                </p>
+                <a asp-controller="Estudiantes"
+                   asp-action="Index"
+                   class="btn btn-success">
+
+                    Administrar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card shadow h-100 text-center">
+
+            <div class="card-body">
+
+                <h1>📝</h1>
+
+                <h4 class="mt-3">
+                    Matrículas
+                </h4>
+
+                <p class="text-muted">
+
+                    Próximamente.
+
+                </p>
+
+                <button class="btn btn-secondary" disabled>
+
+                    En desarrollo
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow mt-5">
+
+    <div class="card-header bg-dark text-white">
+
+        Información del Proyecto
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <h5 class="text-primary">
+
+                    Tecnologías
+
+                </h5>
+
+                <ul>
+
+                    <li>ASP.NET Core MVC</li>
+                    <li>ASP.NET Identity</li>
+                    <li>Entity Framework Core</li>
+                    <li>SQL Server</li>
+                    <li>Bootstrap 5</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <h5 class="text-primary">
+
+                    Funcionalidades
+
+                </h5>
+
+                <ul>
+
+                    <li>✔ Gestión de Carreras</li>
+                    <li>✔ Gestión de Cursos</li>
+                    <li>✔ Registro de Usuarios</li>
+                    <li>✔ Inicio de Sesión</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

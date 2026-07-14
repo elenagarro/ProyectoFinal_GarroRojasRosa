@@ -1,0 +1,111 @@
+@model IEnumerable<ProyectoFinal_GarroRojasRosa.Models.Estudiante>
+
+@{
+    ViewData["Title"] = "Gestión de Estudiantes";
+}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h2 class="mb-0">
+                👨‍🎓 Gestión de Estudiantes
+            </h2>
+
+            <a asp-action="Create"
+               class="btn btn-success">
+
+                + Agregar Estudiante
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-hover table-striped align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Nombre</th>
+
+                    <th>Correo</th>
+
+                    <th>Carrera</th>
+
+                    <th width="230">
+                        Acciones
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+
+                            @item.Nombre
+
+                        </td>
+
+                        <td>
+
+                            @item.Correo
+
+                        </td>
+
+                        <td>
+
+                            @item.Carrera?.Nombre
+
+                        </td>
+
+                        <td>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.IdEstudiante"
+                               class="btn btn-warning btn-sm">
+
+                                Editar
+
+                            </a>
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.IdEstudiante"
+                               class="btn btn-info btn-sm text-white">
+
+                                Detalles
+
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.IdEstudiante"
+                               class="btn btn-danger btn-sm">
+
+                                Eliminar
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

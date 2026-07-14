@@ -1,0 +1,54 @@
+@model ProyectoFinal_GarroRojasRosa.Models.Carrera
+
+@{
+    ViewData["Title"] = "Eliminar Carrera";
+}
+
+<div class="card shadow border-danger">
+
+    <div class="card-header bg-danger text-white">
+
+        <h3>🗑 Eliminar Carrera</h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="alert alert-warning">
+
+            ¿Está seguro de eliminar esta carrera?
+
+        </div>
+
+        <dl class="row">
+
+            <dt class="col-sm-3">Nombre</dt>
+            <dd class="col-sm-9">@Model.Nombre</dd>
+
+            <dt class="col-sm-3">Descripción</dt>
+            <dd class="col-sm-9">@Model.Descripcion</dd>
+
+        </dl>
+
+        <form asp-action="Delete">
+
+            <input type="hidden" asp-for="IdCarrera" />
+
+            <button class="btn btn-danger">
+
+                🗑 Eliminar
+
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Cancelar
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
