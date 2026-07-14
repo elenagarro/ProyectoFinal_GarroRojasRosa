@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoFinal_GarroRojasRosa.Data;
 
@@ -11,9 +12,11 @@ using ProyectoFinal_GarroRojasRosa.Data;
 namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714044028_AgregarNombreApellidoUsuario")]
+    partial class AgregarNombreApellidoUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,17 +319,12 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdCarrera")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("IdEstudiante");
-
-                    b.HasIndex("IdCarrera");
 
                     b.ToTable("Estudiantes");
                 });
@@ -399,17 +397,6 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProyectoFinal_GarroRojasRosa.Models.Estudiante", b =>
-                {
-                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Carrera", "Carrera")
-                        .WithMany()
-                        .HasForeignKey("IdCarrera")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carrera");
                 });
 #pragma warning restore 612, 618
         }

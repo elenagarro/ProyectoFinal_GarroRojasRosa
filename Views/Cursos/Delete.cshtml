@@ -1,14 +1,14 @@
-@model ProyectoFinal_GarroRojasRosa.Models.Carrera
+@model ProyectoFinal_GarroRojasRosa.Models.Curso
 
 @{
-    ViewData["Title"] = "Eliminar Carrera";
+    ViewData["Title"] = "Eliminar Curso";
 }
 
 <div class="card shadow border-danger">
 
     <div class="card-header bg-danger text-white">
 
-        <h3>🗑 Eliminar Carrera</h3>
+        <h3>🗑 Eliminar Curso</h3>
 
     </div>
 
@@ -16,27 +16,30 @@
 
         <div class="alert alert-warning">
 
-            ¿Está seguro de eliminar esta carrera?
+            ¿Está seguro que desea eliminar este curso?
 
         </div>
 
         <dl class="row">
 
+            <dt class="col-sm-3">Código</dt>
+            <dd class="col-sm-9">@Model.Codigo</dd>
+
             <dt class="col-sm-3">Nombre</dt>
             <dd class="col-sm-9">@Model.Nombre</dd>
 
-            <dt class="col-sm-3">Descripción</dt>
-            <dd class="col-sm-9">@Model.Descripcion</dd>
+            <dt class="col-sm-3">Créditos</dt>
+            <dd class="col-sm-9">@Model.Creditos</dd>
 
         </dl>
 
         <form asp-action="Delete">
 
-            <input type="hidden" asp-for="IdCarrera" />
+            <input type="hidden" asp-for="IdCurso" />
 
             <button class="btn btn-danger">
 
-                🗑 Eliminar
+                Eliminar
 
             </button>
 

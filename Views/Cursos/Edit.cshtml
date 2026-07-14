@@ -1,22 +1,28 @@
-@model ProyectoFinal_GarroRojasRosa.Models.Carrera
+@model ProyectoFinal_GarroRojasRosa.Models.Curso
 
 @{
-    ViewData["Title"] = "Editar Carrera";
+    ViewData["Title"] = "Editar Curso";
 }
 
 <div class="card shadow">
 
     <div class="card-header bg-warning">
-        <h3 class="mb-0">✏️ Editar Carrera</h3>
+        <h3 class="mb-0">✏️ Editar Curso</h3>
     </div>
 
     <div class="card-body">
 
         <form asp-action="Edit">
 
-            <input type="hidden" asp-for="IdCarrera" />
+            <input type="hidden" asp-for="IdCurso" />
 
             <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Codigo" class="form-label fw-bold"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
 
             <div class="mb-3">
                 <label asp-for="Nombre" class="form-label fw-bold"></label>
@@ -25,15 +31,15 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Descripcion" class="form-label fw-bold"></label>
-                <textarea asp-for="Descripcion" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                <label asp-for="Creditos" class="form-label fw-bold"></label>
+                <input asp-for="Creditos" class="form-control" />
+                <span asp-validation-for="Creditos" class="text-danger"></span>
             </div>
 
             <div class="form-check mb-4">
                 <input asp-for="Estado" class="form-check-input" />
                 <label asp-for="Estado" class="form-check-label fw-bold">
-                    Carrera Activa
+                    Curso Activo
                 </label>
             </div>
 

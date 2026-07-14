@@ -1,17 +1,17 @@
-@model IEnumerable<ProyectoFinal_GarroRojasRosa.Models.Carrera>
+@model IEnumerable<ProyectoFinal_GarroRojasRosa.Models.Curso>
 
 @{
-    ViewData["Title"] = "Gestión de Carreras";
+    ViewData["Title"] = "Gestión de Cursos";
 }
 
 <div class="card shadow">
 
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-        <h3 class="mb-0">🎓 Gestión de Carreras</h3>
+        <h3 class="mb-0">📘 Gestión de Cursos</h3>
 
         <a asp-action="Create" class="btn btn-success">
-            + Agregar Carrera
+            + Agregar Curso
         </a>
 
     </div>
@@ -23,12 +23,11 @@
             <thead class="table-dark">
 
                 <tr>
-
+                    <th>Código</th>
                     <th>Nombre</th>
-                    <th>Descripción</th>
+                    <th>Créditos</th>
                     <th>Estado</th>
                     <th width="220">Acciones</th>
-
                 </tr>
 
             </thead>
@@ -39,47 +38,41 @@
                 {
                     <tr>
 
+                        <td>@item.Codigo</td>
+
                         <td>@item.Nombre</td>
 
-                        <td>@item.Descripcion</td>
+                        <td>@item.Creditos</td>
 
                         <td>
-
                             @if (item.Estado)
                             {
-                                <span class="badge bg-success">Activa</span>
+                                <span class="badge bg-success">Activo</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger">Inactiva</span>
+                                <span class="badge bg-danger">Inactivo</span>
                             }
-
                         </td>
 
                         <td>
 
                             <a asp-action="Edit"
-                               asp-route-id="@item.IdCarrera"
+                               asp-route-id="@item.IdCurso"
                                class="btn btn-warning btn-sm">
-
                                 Editar
-
                             </a>
 
                             <a asp-action="Details"
-                               asp-route-id="@item.IdCarrera"
+                               asp-route-id="@item.IdCurso"
                                class="btn btn-info btn-sm text-white">
-
                                 Detalles
-
                             </a>
 
                             <a asp-action="Delete"
-                               asp-route-id="@item.IdCarrera"
+                               asp-route-id="@item.IdCurso"
                                class="btn btn-danger btn-sm">
-
                                 Eliminar
-
                             </a>
 
                         </td>

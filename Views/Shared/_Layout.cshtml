@@ -1,51 +1,167 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProyectoFinal_GarroRojasRosa</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Sistema de Matrícula Universitaria</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProyectoFinal_GarroRojasRosa.styles.css" asp-append-version="true" />
 </head>
-<body>
+
+<body style="background:#f4f6f9;">
+
+    <!-- ENCABEZADO -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+        <nav class="navbar navbar-dark" style="background:#0B2E73;">
+
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProyectoFinal_GarroRojasRosa</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+
+                <a class="navbar-brand fw-bold d-flex align-items-center"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <img src="~/images/logo.jpg"
+                         width="55"
+                         class="me-3 rounded" />
+
+                    <span style="font-size:24px;">
+                        SISTEMA DE MATRÍCULA UNIVERSITARIA
+                    </span>
+
+                </a>
+
+                <partial name="_LoginPartial" />
+
             </div>
+
         </nav>
+
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <!-- MENÚ LATERAL -->
+
+            <aside class="col-md-2 p-3 bg-white border-end" style="min-height:85vh;">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <div class="card mb-4 border-0 shadow-sm">
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+                                Administrador
+                            </small>
+
+                            <h6 class="mb-0 fw-bold text-primary">
+                                @User.Identity.Name
+                            </h6>
+
+                        </div>
+
+                    </div>
+                }
+
+                <h5 class="text-primary mb-4">
+
+                    Menú Principal
+
+                </h5>
+
+                <div class="d-grid gap-2">
+                    <a asp-controller="Carreras"
+                       asp-action="Index"
+                       class="btn text-white text-start"
+                       style="background-color:#0B2E73;">
+
+                        🎓 Carreras
+
+                    </a>
+
+                    <a asp-controller="Cursos"
+                       asp-action="Index"
+                       class="btn text-white text-start"
+                       style="background-color:#0B2E73;">
+
+                        📘 Cursos
+
+                    </a>
+
+                    <button class="btn text-white text-start"
+                            style="background-color:#0B2E73;"
+                            disabled>
+
+                        👨‍🏫 Docentes
+
+                    </button>
+
+                    <a asp-controller="Estudiantes"
+                       asp-action="Index"
+                       class="btn text-white text-start"
+                       style="background-color:#0B2E73;">
+
+                        👨‍🎓 Estudiantes
+
+                    </a>
+
+                    <button class="btn btn-outline-secondary text-start" disabled>
+
+                        📝 Matrículas
+
+                    </button>
+
+                    <button class="btn btn-outline-secondary text-start" disabled>
+
+                        👥 Usuarios
+
+                    </button>
+
+                    <button class="btn btn-outline-secondary text-start" disabled>
+
+                        🔑 Roles
+
+                    </button>
+
+                </div>
+
+            </aside>
+
+            <!-- CONTENIDO -->
+
+            <main class="col-md-10 p-4">
+
+                @RenderBody()
+
+            </main>
+
+        </div>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ProyectoFinal_GarroRojasRosa - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="bg-dark text-white">
+
+        <div class="container py-3 text-center">
+
+            Universidad Fidélitas |
+            Proyecto Final Programación Avanzada |
+            Sistema de Matrícula Universitaria © 2026
+
         </div>
+
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
+
 </html>
