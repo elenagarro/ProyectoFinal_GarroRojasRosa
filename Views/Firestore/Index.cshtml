@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Sincronización con Firestore";
+}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Sincronización con Firestore</h3>
+    </div>
+
+    <div class="card-body">
+
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Mensaje"]
+            </div>
+        }
+
+        <p>
+            Esta opción permite sincronizar la información principal del sistema
+            con Cloud Firestore.
+        </p>
+
+        <p>
+            Se generarán o actualizarán las siguientes colecciones:
+        </p>
+
+        <ul>
+            <li>Carreras</li>
+            <li>Cursos</li>
+            <li>Docentes</li>
+            <li>Estudiantes</li>
+            <li>Matrículas</li>
+            <li>Usuarios</li>
+            <li>Roles</li>
+            <li>Auditoría</li>
+        </ul>
+
+        <form asp-controller="Firestore"
+              asp-action="Sincronizar"
+              method="post">
+
+            <button type="submit"
+                    class="btn btn-success">
+                Sincronizar con Firestore
+            </button>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-secondary">
+                Regresar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>

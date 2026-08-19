@@ -1,7 +1,9 @@
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal_GarroRojasRosa.Data;
 using ProyectoFinal_GarroRojasRosa.Models;
+using ProyectoFinal_GarroRojasRosa.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,22 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddControllersWithViews();
 
 
+// ===============================
+// FIRESTORE
+// ===============================
+
+builder.Services.AddSingleton(provider =>
+{
+    return FirestoreDb.Create("proyectofinal-garrorojasrosa");
+});
+
+builder.Services.AddScoped<FirestoreService>();
+
+
+// ===============================
+// CREAR APLICACIÓN
+// ===============================
+
 var app = builder.Build();
 
 
@@ -68,7 +86,11 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    // Crear usuario administrador inicial
+
+    // ===============================
+    // CREAR ADMINISTRADOR INICIAL
+    // ===============================
+
     string correoAdmin = "admin@universidad.com";
     string claveAdmin = "Admin123!";
 
@@ -111,6 +133,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+
 // ===============================
 // PIPELINE
 // ===============================
@@ -130,6 +153,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -142,8 +142,14 @@
                                style="background-color:#0B2E73;">
                                 Matrículas
                             </a>
-                        }
 
+                            <a asp-controller="Firestore"
+                               asp-action="Index"
+                               class="btn text-white text-start"
+                               style="background-color:#0B2E73;">
+                                Firestore
+                            </a>
+                        }
 
                         <!-- MENÚ DEL ESTUDIANTE -->
                         @if (User.IsInRole("Estudiante"))
