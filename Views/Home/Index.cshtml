@@ -3,208 +3,320 @@
 }
 
 <div class="p-5 mb-4 bg-primary text-white rounded-3 shadow">
+
     <div class="container-fluid py-3">
 
         <h1 class="display-4 fw-bold">
-            🎓 Sistema de Matrícula Universitaria
+            Sistema de Matrícula Universitaria
         </h1>
 
-        <p class="lead">
-            Bienvenido al sistema de administración académica.
-        </p>
-
-        <hr />
-
-        <p>
-            Administre carreras, cursos, docentes, estudiantes y matrículas
-            desde una plataforma desarrollada con ASP.NET Core MVC.
+        <p class="lead mb-0">
+            Plataforma para la gestión académica y matrícula universitaria.
         </p>
 
     </div>
-</div>
-
-<div class="row g-4">
-
-    <div class="col-md-3">
-
-        <div class="card shadow h-100 text-center">
-
-            <div class="card-body">
-
-                <h1>🎓</h1>
-
-                <h4 class="mt-3">
-                    Carreras
-                </h4>
-
-                <p class="text-muted">
-
-                    Administración de carreras universitarias.
-
-                </p>
-
-                <a asp-controller="Carreras"
-                   asp-action="Index"
-                   class="btn btn-primary">
-
-                    Administrar
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-3">
-
-        <div class="card shadow h-100 text-center">
-
-            <div class="card-body">
-
-                <h1>📘</h1>
-
-                <h4 class="mt-3">
-                    Cursos
-                </h4>
-
-                <p class="text-muted">
-
-                    Administración de cursos.
-
-                </p>
-
-                <a asp-controller="Cursos"
-                   asp-action="Index"
-                   class="btn btn-success">
-
-                    Administrar
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-3">
-
-        <div class="card shadow h-100 text-center">
-
-            <div class="card-body">
-
-                <h1>👨‍🎓</h1>
-
-                <h4 class="mt-3">
-                    Estudiantes
-                </h4>
-
-                <p class="text-muted">
-
-                    Próximamente.
-
-                </p>
-                <a asp-controller="Estudiantes"
-                   asp-action="Index"
-                   class="btn btn-success">
-
-                    Administrar
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-3">
-
-        <div class="card shadow h-100 text-center">
-
-            <div class="card-body">
-
-                <h1>📝</h1>
-
-                <h4 class="mt-3">
-                    Matrículas
-                </h4>
-
-                <p class="text-muted">
-
-                    Próximamente.
-
-                </p>
-
-                <button class="btn btn-secondary" disabled>
-
-                    En desarrollo
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
 
 </div>
 
-<div class="card shadow mt-5">
 
-    <div class="card-header bg-dark text-white">
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Administrador"))
+    {
+        <!-- DASHBOARD DEL ADMINISTRADOR -->
 
-        Información del Proyecto
+        <div class="mb-4">
 
-    </div>
+            <h3 class="text-primary mb-3">
+                Resumen del Sistema
+            </h3>
 
-    <div class="card-body">
+            <div class="row g-4">
 
-        <div class="row">
+                <div class="col-md-4">
+                    @await Component.InvokeAsync("TotalCarreras")
+                </div>
 
-            <div class="col-md-6">
+                <div class="col-md-4">
+                    @await Component.InvokeAsync("TotalCursos")
+                </div>
 
-                <h5 class="text-primary">
-
-                    Tecnologías
-
-                </h5>
-
-                <ul>
-
-                    <li>ASP.NET Core MVC</li>
-                    <li>ASP.NET Identity</li>
-                    <li>Entity Framework Core</li>
-                    <li>SQL Server</li>
-                    <li>Bootstrap 5</li>
-
-                </ul>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <h5 class="text-primary">
-
-                    Funcionalidades
-
-                </h5>
-
-                <ul>
-
-                    <li>✔ Gestión de Carreras</li>
-                    <li>✔ Gestión de Cursos</li>
-                    <li>✔ Registro de Usuarios</li>
-                    <li>✔ Inicio de Sesión</li>
-
-                </ul>
+                <div class="col-md-4">
+                    @await Component.InvokeAsync("TotalEstudiantes")
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
-</div>
+        <div class="card shadow mt-4">
+
+            <div class="card-header bg-dark text-white">
+                Administración Académica
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-4">
+
+                        <div class="card h-100 border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title text-primary">
+                                    Carreras
+                                </h5>
+
+                                <p class="card-text">
+                                    Crear, consultar, editar y administrar
+                                    las carreras disponibles.
+                                </p>
+
+                                <a asp-controller="Carreras"
+                                   asp-action="Index"
+                                   class="btn btn-primary">
+                                    Administrar Carreras
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="card h-100 border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title text-primary">
+                                    Cursos
+                                </h5>
+
+                                <p class="card-text">
+                                    Gestionar cursos, carreras asociadas
+                                    y docentes asignados.
+                                </p>
+
+                                <a asp-controller="Cursos"
+                                   asp-action="Index"
+                                   class="btn btn-primary">
+                                    Administrar Cursos
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="card h-100 border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title text-primary">
+                                    Docentes
+                                </h5>
+
+                                <p class="card-text">
+                                    Registrar y administrar docentes
+                                    del sistema académico.
+                                </p>
+
+                                <a asp-controller="Docentes"
+                                   asp-action="Index"
+                                   class="btn btn-primary">
+                                    Administrar Docentes
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="card h-100 border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title text-primary">
+                                    Estudiantes
+                                </h5>
+
+                                <p class="card-text">
+                                    Consultar y administrar los estudiantes
+                                    registrados en el sistema.
+                                </p>
+
+                                <a asp-controller="Estudiantes"
+                                   asp-action="Index"
+                                   class="btn btn-primary">
+                                    Administrar Estudiantes
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="card h-100 border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title text-primary">
+                                    Matrículas
+                                </h5>
+
+                                <p class="card-text">
+                                    Consultar las matrículas realizadas
+                                    por los estudiantes.
+                                </p>
+
+                                <a asp-controller="Matriculas"
+                                   asp-action="Index"
+                                   class="btn btn-primary">
+                                    Ver Matrículas
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+
+    @if (User.IsInRole("Estudiante"))
+    {
+        <!-- PÁGINA PRINCIPAL DEL ESTUDIANTE -->
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                Portal del Estudiante
+            </div>
+
+            <div class="card-body">
+
+                <p class="lead">
+                    Desde este portal puede consultar las carreras,
+                    revisar los cursos disponibles y administrar sus matrículas.
+                </p>
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <div class="card h-100 bg-light border-0">
+
+                            <div class="card-body">
+
+                                <h5 class="text-primary">
+                                    Cursos disponibles
+                                </h5>
+
+                                <p>
+                                    Consulte los cursos disponibles
+                                    correspondientes a su carrera.
+                                </p>
+
+                                <a asp-controller="Matriculas"
+                                   asp-action="CursosDisponibles"
+                                   class="btn btn-primary">
+                                    Ver Cursos Disponibles
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="card h-100 bg-light border-0">
+
+                            <div class="card-body">
+
+                                <h5 class="text-primary">
+                                    Mis Matrículas
+                                </h5>
+
+                                <p>
+                                    Consulte los cursos en los que
+                                    se encuentra matriculado.
+                                </p>
+
+                                <a asp-controller="Matriculas"
+                                   asp-action="MisMatriculas"
+                                   class="btn btn-primary">
+                                    Consultar Matrículas
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+}
+else
+{
+    <!-- USUARIO SIN INICIAR SESIÓN -->
+
+    <div class="card shadow">
+
+        <div class="card-body text-center py-5">
+
+            <h3 class="text-primary">
+                Bienvenido
+            </h3>
+
+            <p class="lead">
+                Inicie sesión o regístrese para acceder al sistema.
+            </p>
+
+            <a asp-controller="Account"
+               asp-action="Login"
+               class="btn btn-primary me-2">
+                Iniciar sesión
+            </a>
+
+            <a asp-controller="Account"
+               asp-action="Register"
+               class="btn btn-success">
+                Registrarse
+            </a>
+
+        </div>
+
+    </div>
+}

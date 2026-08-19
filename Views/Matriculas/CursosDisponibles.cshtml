@@ -1,0 +1,227 @@
+﻿@model IEnumerable<ProyectoFinal_GarroRojasRosa.Models.Curso>
+
+@{
+    ViewData["Title"] = "Cursos Disponibles";
+
+    var cursosMatriculados =
+        ViewBag.CursosMatriculados as List<int>
+        ?? new List<int>();
+}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Cursos Disponibles</h3>
+    </div>
+
+    <div class="card-body">
+
+        <div id="mensajeAjax"></div>
+
+        @Html.AntiForgeryToken()
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+                No hay cursos disponibles para su carrera.
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover table-striped align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Código</th>
+                        <th>Curso</th>
+                        <th>Carrera</th>
+                        <th>Docente</th>
+                        <th>Créditos</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var curso in Model)
+                    {
+                        var estaMatriculado =
+                            cursosMatriculados.Contains(curso.IdCurso);
+
+                        <tr>
+
+                            <td>
+                                @curso.Codigo
+                            </td>
+
+                            <td>
+                                @curso.Nombre
+                            </td>
+
+                            <td>
+                                @curso.Carrera?.Nombre
+                            </td>
+
+                            <td>
+
+                                @if (curso.Docente != null)
+                                {
+                                    @curso.Docente.Nombre
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Sin docente asignado
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+                                @curso.Creditos
+                            </td>
+
+                            <td id="accion-@curso.IdCurso">
+
+                                @if (estaMatriculado)
+                                {
+                                    <span class="badge bg-success">
+                                        Matriculado
+                                    </span>
+                                }
+                                else
+                                {
+                                    <button type="button"
+                                            class="btn btn-success btn-sm btn-matricular"
+                                            data-id="@curso.IdCurso">
+
+                                        Matricular
+
+                                    </button>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+
+        <div class="mt-3">
+
+            <a asp-action="MisMatriculas"
+               class="btn btn-secondary">
+                Ver mis matrículas
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const botones =
+                document.querySelectorAll(".btn-matricular");
+
+            botones.forEach(function(boton) {
+
+                boton.addEventListener("click", async function() {
+
+                    const idCurso = boton.dataset.id;
+
+                    const token =
+                        document.querySelector(
+                            'input[name="__RequestVerificationToken"]'
+                        ).value;
+
+                    boton.disabled = true;
+                    boton.textContent = "Procesando...";
+
+                    try {
+
+                        const response = await fetch(
+                            '@Url.Action("MatricularAjax", "Matriculas")',
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded",
+
+                                    "RequestVerificationToken":
+                                        token
+                                },
+
+                                body:
+                                    "idCurso=" +
+                                    encodeURIComponent(idCurso)
+                            });
+
+                        const resultado =
+                            await response.json();
+
+                        const mensaje =
+                            document.getElementById("mensajeAjax");
+
+                        if (resultado.success) {
+
+                            mensaje.innerHTML =
+                                '<div class="alert alert-success">' +
+                                resultado.mensaje +
+                                '</div>';
+
+                            const celda =
+                                document.getElementById(
+                                    "accion-" + idCurso
+                                );
+
+                            celda.innerHTML =
+                                '<span class="badge bg-success">' +
+                                'Matriculado' +
+                                '</span>';
+
+                        }
+                        else {
+
+                            mensaje.innerHTML =
+                                '<div class="alert alert-danger">' +
+                                resultado.mensaje +
+                                '</div>';
+
+                            boton.disabled = false;
+                            boton.textContent = "Matricular";
+                        }
+
+                    }
+                    catch (error) {
+
+                        const mensaje =
+                            document.getElementById("mensajeAjax");
+
+                        mensaje.innerHTML =
+                            '<div class="alert alert-danger">' +
+                            'No fue posible realizar la matrícula.' +
+                            '</div>';
+
+                        boton.disabled = false;
+                        boton.textContent = "Matricular";
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+}

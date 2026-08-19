@@ -2,87 +2,258 @@
 
 @{
     ViewData["Title"] = "Gestión de Cursos";
+
+    int paginaActual = ViewBag.PaginaActual ?? 1;
+    int totalPaginas = ViewBag.TotalPaginas ?? 0;
 }
 
 <div class="card shadow">
 
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-        <h3 class="mb-0">📘 Gestión de Cursos</h3>
+        <h3 class="mb-0">Gestión de Cursos</h3>
 
-        <a asp-action="Create" class="btn btn-success">
-            + Agregar Curso
-        </a>
+        @if (User.IsInRole("Administrador"))
+        {
+            <a asp-action="Create"
+               class="btn btn-success">
+                + Agregar Curso
+            </a>
+        }
 
     </div>
 
     <div class="card-body">
 
-        <table class="table table-hover table-striped align-middle">
+        <!-- FILTROS -->
+        <form asp-action="Index"
+              method="get"
+              class="row g-3 mb-4">
 
-            <thead class="table-dark">
+            <div class="col-md-5">
 
-                <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Créditos</th>
-                    <th>Estado</th>
-                    <th width="220">Acciones</th>
-                </tr>
+                <label class="form-label fw-bold">
+                    Buscar
+                </label>
 
-            </thead>
+                <input type="text"
+                       name="buscar"
+                       value="@ViewBag.Buscar"
+                       class="form-control"
+                       placeholder="Buscar por nombre o código" />
 
-            <tbody>
+            </div>
 
-                @foreach (var item in Model)
-                {
+            <div class="col-md-4">
+
+                <label class="form-label fw-bold">
+                    Carrera
+                </label>
+
+                <select name="idCarrera"
+                        class="form-select"
+                        asp-items="ViewBag.IdCarreraFiltro">
+
+                    <option value="">
+                        Todas las carreras
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-3 d-flex align-items-end gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Buscar
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Limpiar
+                </a>
+
+            </div>
+
+        </form>
+
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+                No se encontraron cursos con los filtros seleccionados.
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover table-striped align-middle">
+
+                <thead class="table-dark">
                     <tr>
-
-                        <td>@item.Codigo</td>
-
-                        <td>@item.Nombre</td>
-
-                        <td>@item.Creditos</td>
-
-                        <td>
-                            @if (item.Estado)
-                            {
-                                <span class="badge bg-success">Activo</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger">Inactivo</span>
-                            }
-                        </td>
-
-                        <td>
-
-                            <a asp-action="Edit"
-                               asp-route-id="@item.IdCurso"
-                               class="btn btn-warning btn-sm">
-                                Editar
-                            </a>
-
-                            <a asp-action="Details"
-                               asp-route-id="@item.IdCurso"
-                               class="btn btn-info btn-sm text-white">
-                                Detalles
-                            </a>
-
-                            <a asp-action="Delete"
-                               asp-route-id="@item.IdCurso"
-                               class="btn btn-danger btn-sm">
-                                Eliminar
-                            </a>
-
-                        </td>
-
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Carrera</th>
+                        <th>Docente</th>
+                        <th>Créditos</th>
+                        <th>Estado</th>
+                        <th width="250">Acciones</th>
                     </tr>
-                }
+                </thead>
 
-            </tbody>
+                <tbody>
 
-        </table>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.Codigo
+                            </td>
+
+                            <td>
+                                @item.Nombre
+                            </td>
+
+                            <td>
+                                @if (item.Carrera != null)
+                                {
+                                    @item.Carrera.Nombre
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Sin carrera asignada
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.Docente != null)
+                                {
+                                    @item.Docente.Nombre
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Sin docente asignado
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @item.Creditos
+                            </td>
+
+                            <td>
+                                @if (item.Estado)
+                                {
+                                    <span class="badge bg-success">
+                                        Activo
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactivo
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.IdCurso"
+                                   class="btn btn-info btn-sm text-white">
+                                    Detalles
+                                </a>
+
+                                @if (User.IsInRole("Administrador"))
+                                {
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.IdCurso"
+                                       class="btn btn-warning btn-sm">
+                                        Editar
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@item.IdCurso"
+                                       class="btn btn-danger btn-sm">
+                                        Eliminar
+                                    </a>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+
+
+        <!-- PAGINACIÓN -->
+        @if (totalPaginas > 1)
+        {
+            <nav class="mt-4">
+
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item @(paginaActual <= 1 ? "disabled" : "")">
+
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pagina="@(paginaActual - 1)"
+                           asp-route-buscar="@ViewBag.Buscar"
+                           asp-route-idCarrera="@Context.Request.Query["idCarrera"]">
+
+                            Anterior
+
+                        </a>
+
+                    </li>
+
+                    @for (int i = 1; i <= totalPaginas; i++)
+                    {
+                        <li class="page-item @(i == paginaActual ? "active" : "")">
+
+                            <a class="page-link"
+                               asp-action="Index"
+                               asp-route-pagina="@i"
+                               asp-route-buscar="@ViewBag.Buscar"
+                               asp-route-idCarrera="@Context.Request.Query["idCarrera"]">
+
+                                @i
+
+                            </a>
+
+                        </li>
+                    }
+
+                    <li class="page-item @(paginaActual >= totalPaginas ? "disabled" : "")">
+
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pagina="@(paginaActual + 1)"
+                           asp-route-buscar="@ViewBag.Buscar"
+                           asp-route-idCarrera="@Context.Request.Query["idCarrera"]">
+
+                            Siguiente
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="text-center text-muted">
+                Página @paginaActual de @totalPaginas
+            </div>
+        }
 
     </div>
 

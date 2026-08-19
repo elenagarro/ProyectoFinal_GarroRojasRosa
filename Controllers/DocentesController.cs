@@ -6,24 +6,23 @@ using ProyectoFinal_GarroRojasRosa.Models;
 
 namespace ProyectoFinal_GarroRojasRosa.Controllers
 {
-    public class CarrerasController : Controller
+    [Authorize(Roles = "Administrador")]
+    public class DocentesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CarrerasController(ApplicationDbContext context)
+        public DocentesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Carreras
-        [Authorize]
+        // GET: Docentes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Carreras.ToListAsync());
+            return View(await _context.Docentes.ToListAsync());
         }
 
-        // GET: Carreras/Details/5
-        [Authorize]
+        // GET: Docentes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -31,42 +30,41 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
                 return NotFound();
             }
 
-            var carrera = await _context.Carreras
-                .FirstOrDefaultAsync(m => m.IdCarrera == id);
+            var docente = await _context.Docentes
+                .FirstOrDefaultAsync(d => d.IdDocente == id);
 
-            if (carrera == null)
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(carrera);
+            return View(docente);
         }
 
-        // GET: Carreras/Create
-        [Authorize(Roles = "Administrador")]
+        // GET: Docentes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Carreras/Create
+        // POST: Docentes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Create([Bind("IdCarrera,Nombre,Descripcion,Estado")] Carrera carrera)
+        public async Task<IActionResult> Create(
+            [Bind("IdDocente,Nombre,Correo,Especialidad,Estado")] Docente docente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(carrera);
+                _context.Add(docente);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(carrera);
+            return View(docente);
         }
 
-        // GET: Carreras/Edit/5
-        [Authorize(Roles = "Administrador")]
+        // GET: Docentes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,23 +72,24 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
                 return NotFound();
             }
 
-            var carrera = await _context.Carreras.FindAsync(id);
+            var docente = await _context.Docentes.FindAsync(id);
 
-            if (carrera == null)
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(carrera);
+            return View(docente);
         }
 
-        // POST: Carreras/Edit/5
+        // POST: Docentes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCarrera,Nombre,Descripcion,Estado")] Carrera carrera)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("IdDocente,Nombre,Correo,Especialidad,Estado")] Docente docente)
         {
-            if (id != carrera.IdCarrera)
+            if (id != docente.IdDocente)
             {
                 return NotFound();
             }
@@ -99,29 +98,26 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
             {
                 try
                 {
-                    _context.Update(carrera);
+                    _context.Update(docente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarreraExists(carrera.IdCarrera))
+                    if (!DocenteExists(docente.IdDocente))
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
+                    throw;
                 }
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(carrera);
+            return View(docente);
         }
 
-        // GET: Carreras/Delete/5
-        [Authorize(Roles = "Administrador")]
+        // GET: Docentes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,37 +125,36 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
                 return NotFound();
             }
 
-            var carrera = await _context.Carreras
-                .FirstOrDefaultAsync(m => m.IdCarrera == id);
+            var docente = await _context.Docentes
+                .FirstOrDefaultAsync(d => d.IdDocente == id);
 
-            if (carrera == null)
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(carrera);
+            return View(docente);
         }
 
-        // POST: Carreras/Delete/5
+        // POST: Docentes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var carrera = await _context.Carreras.FindAsync(id);
+            var docente = await _context.Docentes.FindAsync(id);
 
-            if (carrera != null)
+            if (docente != null)
             {
-                _context.Carreras.Remove(carrera);
+                _context.Docentes.Remove(docente);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarreraExists(int id)
+        private bool DocenteExists(int id)
         {
-            return _context.Carreras.Any(e => e.IdCarrera == id);
+            return _context.Docentes.Any(d => d.IdDocente == id);
         }
     }
 }

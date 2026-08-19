@@ -1,39 +1,27 @@
-@model ProyectoFinal_GarroRojasRosa.Models.Curso
+@model ProyectoFinal_GarroRojasRosa.Models.Docente
 
 @{
-    ViewData["Title"] = "Editar Curso";
+    ViewData["Title"] = "Editar Docente";
 }
 
 <div class="card shadow">
 
     <div class="card-header bg-warning">
-        <h3 class="mb-0">Editar Curso</h3>
+        <h3 class="mb-0">Editar Docente</h3>
     </div>
 
     <div class="card-body">
 
         <form asp-action="Edit">
 
-            <input type="hidden" asp-for="IdCurso" />
+            <input type="hidden" asp-for="IdDocente" />
 
             <div asp-validation-summary="ModelOnly"
                  class="alert alert-danger">
             </div>
 
             <div class="mb-3">
-                <label asp-for="Codigo"
-                       class="form-label fw-bold">
-                </label>
 
-                <input asp-for="Codigo"
-                       class="form-control" />
-
-                <span asp-validation-for="Codigo"
-                      class="text-danger">
-                </span>
-            </div>
-
-            <div class="mb-3">
                 <label asp-for="Nombre"
                        class="form-label fw-bold">
                 </label>
@@ -44,61 +32,37 @@
                 <span asp-validation-for="Nombre"
                       class="text-danger">
                 </span>
+
             </div>
 
             <div class="mb-3">
-                <label asp-for="Creditos"
+
+                <label asp-for="Correo"
                        class="form-label fw-bold">
                 </label>
 
-                <input asp-for="Creditos"
+                <input asp-for="Correo"
                        class="form-control" />
 
-                <span asp-validation-for="Creditos"
+                <span asp-validation-for="Correo"
                       class="text-danger">
                 </span>
+
             </div>
 
             <div class="mb-3">
-                <label asp-for="IdCarrera"
+
+                <label asp-for="Especialidad"
                        class="form-label fw-bold">
-                    Carrera
                 </label>
 
-                <select asp-for="IdCarrera"
-                        class="form-select"
-                        asp-items="ViewBag.IdCarrera">
+                <input asp-for="Especialidad"
+                       class="form-control" />
 
-                    <option value="">
-                        Seleccione una carrera
-                    </option>
-
-                </select>
-
-                <span asp-validation-for="IdCarrera"
+                <span asp-validation-for="Especialidad"
                       class="text-danger">
                 </span>
-            </div>
 
-            <div class="mb-3">
-                <label asp-for="IdDocente"
-                       class="form-label fw-bold">
-                    Docente
-                </label>
-
-                <select asp-for="IdDocente"
-                        class="form-select"
-                        asp-items="ViewBag.IdDocente">
-
-                    <option value="">
-                        Sin docente asignado
-                    </option>
-
-                </select>
-
-                <span asp-validation-for="IdDocente"
-                      class="text-danger">
-                </span>
             </div>
 
             <div class="form-check mb-4">
@@ -108,7 +72,7 @@
 
                 <label asp-for="Estado"
                        class="form-check-label fw-bold">
-                    Curso Activo
+                    Docente Activo
                 </label>
 
             </div>

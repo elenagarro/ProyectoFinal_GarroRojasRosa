@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoFinal_GarroRojasRosa.Data;
 
@@ -11,9 +12,11 @@ using ProyectoFinal_GarroRojasRosa.Data;
 namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818053152_RelacionCursoDocente")]
+    partial class RelacionCursoDocente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -366,23 +369,13 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMatricula"));
 
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("FechaMatricula")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdCurso")
+                    b.Property<int>("IdCarrera")
                         .HasColumnType("int");
 
                     b.Property<int>("IdEstudiante")
                         .HasColumnType("int");
 
                     b.HasKey("IdMatricula");
-
-                    b.HasIndex("IdCurso");
-
-                    b.HasIndex("IdEstudiante");
 
                     b.ToTable("Matriculas");
                 });
@@ -470,25 +463,6 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Carrera");
-                });
-
-            modelBuilder.Entity("ProyectoFinal_GarroRojasRosa.Models.Matricula", b =>
-                {
-                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Curso", "Curso")
-                        .WithMany()
-                        .HasForeignKey("IdCurso")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Estudiante", "Estudiante")
-                        .WithMany()
-                        .HasForeignKey("IdEstudiante")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Curso");
-
-                    b.Navigation("Estudiante");
                 });
 #pragma warning restore 612, 618
         }
