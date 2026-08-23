@@ -46,38 +46,6 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
             return View(estudiante);
         }
 
-        // GET: Estudiantes/Create
-        public IActionResult Create()
-        {
-            ViewBag.IdCarrera = new SelectList(
-                _context.Carreras,
-                "IdCarrera",
-                "Nombre");
-
-            return View();
-        }
-
-        // POST: Estudiantes/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdEstudiante,Nombre,Correo,IdCarrera")] Estudiante estudiante)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(estudiante);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewBag.IdCarrera = new SelectList(
-                _context.Carreras,
-                "IdCarrera",
-                "Nombre",
-                estudiante.IdCarrera);
-
-            return View(estudiante);
-        }
-
         // GET: Estudiantes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -105,7 +73,9 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         // POST: Estudiantes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEstudiante,Nombre,Correo,IdCarrera")] Estudiante estudiante)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("IdEstudiante,Nombre,Correo,IdCarrera")] Estudiante estudiante)
         {
             if (id != estudiante.IdEstudiante)
             {
@@ -114,20 +84,22 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(estudiante);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EstudianteExists(estudiante.IdEstudiante))
-                    {
-                        return NotFound();
-                    }
+                var estudianteActual = await _context.Estudiantes
+                    .FirstOrDefaultAsync(e => e.IdEstudiante == id);
 
-                    throw;
+                if (estudianteActual == null)
+                {
+                    return NotFound();
                 }
+
+                // Actualizar solamente los datos académicos.
+                // Se conserva ApplicationUserId para no perder
+                // la relación con ASP.NET Identity.
+                estudianteActual.Nombre = estudiante.Nombre;
+                estudianteActual.Correo = estudiante.Correo;
+                estudianteActual.IdCarrera = estudiante.IdCarrera;
+
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -140,7 +112,6 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
 
             return View(estudiante);
         }
-
         // GET: Estudiantes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
