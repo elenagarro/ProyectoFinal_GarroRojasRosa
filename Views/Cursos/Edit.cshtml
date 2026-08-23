@@ -7,7 +7,7 @@
 <div class="card shadow">
 
     <div class="card-header bg-warning">
-        <h3 class="mb-0">✏️ Editar Curso</h3>
+        <h3 class="mb-0">Editar Curso</h3>
     </div>
 
     <div class="card-body">
@@ -16,40 +16,116 @@
 
             <input type="hidden" asp-for="IdCurso" />
 
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-
-            <div class="mb-3">
-                <label asp-for="Codigo" class="form-label fw-bold"></label>
-                <input asp-for="Codigo" class="form-control" />
-                <span asp-validation-for="Codigo" class="text-danger"></span>
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger">
             </div>
 
             <div class="mb-3">
-                <label asp-for="Nombre" class="form-label fw-bold"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="Codigo"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="Codigo"
+                       class="form-control" />
+
+                <span asp-validation-for="Codigo"
+                      class="text-danger">
+                </span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Creditos" class="form-label fw-bold"></label>
-                <input asp-for="Creditos" class="form-control" />
-                <span asp-validation-for="Creditos" class="text-danger"></span>
+                <label asp-for="Nombre"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="Nombre"
+                       class="form-control" />
+
+                <span asp-validation-for="Nombre"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Creditos"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="Creditos"
+                       class="form-control" />
+
+                <span asp-validation-for="Creditos"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="IdCarrera"
+                       class="form-label fw-bold">
+                    Carrera
+                </label>
+
+                <select asp-for="IdCarrera"
+                        class="form-select"
+                        asp-items="ViewBag.IdCarrera">
+
+                    <option value="">
+                        Seleccione una carrera
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="IdCarrera"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="IdDocente"
+                       class="form-label fw-bold">
+                    Docente
+                </label>
+
+                <select asp-for="IdDocente"
+                        class="form-select"
+                        asp-items="ViewBag.IdDocente">
+
+                    <option value="">
+                        Sin docente asignado
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="IdDocente"
+                      class="text-danger">
+                </span>
             </div>
 
             <div class="form-check mb-4">
-                <input asp-for="Estado" class="form-check-input" />
-                <label asp-for="Estado" class="form-check-label fw-bold">
+
+                <input asp-for="Estado"
+                       class="form-check-input" />
+
+                <label asp-for="Estado"
+                       class="form-check-label fw-bold">
                     Curso Activo
                 </label>
+
             </div>
 
-            <button type="submit" class="btn btn-warning">
-                💾 Guardar Cambios
-            </button>
+            <div class="d-flex gap-2">
 
-            <a asp-action="Index" class="btn btn-secondary">
-                ↩ Regresar
-            </a>
+                <button type="submit"
+                        class="btn btn-warning">
+                    Guardar Cambios
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Regresar
+                </a>
+
+            </div>
 
         </form>
 
@@ -57,7 +133,8 @@
 
 </div>
 
-@section Scripts {
+@section Scripts
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

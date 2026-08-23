@@ -10,9 +10,12 @@
 
         <h3 class="mb-0">🎓 Gestión de Carreras</h3>
 
-        <a asp-action="Create" class="btn btn-success">
-            + Agregar Carrera
-        </a>
+        @if (User.IsInRole("Administrador"))
+        {
+            <a asp-action="Create" class="btn btn-success">
+                + Agregar Carrera
+            </a>
+        }
 
     </div>
 
@@ -21,16 +24,12 @@
         <table class="table table-hover table-striped align-middle">
 
             <thead class="table-dark">
-
                 <tr>
-
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Estado</th>
-                    <th width="220">Acciones</th>
-
+                    <th width="250">Acciones</th>
                 </tr>
-
             </thead>
 
             <tbody>
@@ -39,48 +38,51 @@
                 {
                     <tr>
 
-                        <td>@item.Nombre</td>
-
-                        <td>@item.Descripcion</td>
+                        <td>
+                            @item.Nombre
+                        </td>
 
                         <td>
+                            @item.Descripcion
+                        </td>
 
+                        <td>
                             @if (item.Estado)
                             {
-                                <span class="badge bg-success">Activa</span>
+                                <span class="badge bg-success">
+                                    Activa
+                                </span>
                             }
                             else
                             {
-                                <span class="badge bg-danger">Inactiva</span>
+                                <span class="badge bg-danger">
+                                    Inactiva
+                                </span>
                             }
-
                         </td>
 
                         <td>
 
-                            <a asp-action="Edit"
-                               asp-route-id="@item.IdCarrera"
-                               class="btn btn-warning btn-sm">
-
-                                Editar
-
-                            </a>
-
                             <a asp-action="Details"
                                asp-route-id="@item.IdCarrera"
                                class="btn btn-info btn-sm text-white">
-
                                 Detalles
-
                             </a>
 
-                            <a asp-action="Delete"
-                               asp-route-id="@item.IdCarrera"
-                               class="btn btn-danger btn-sm">
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.IdCarrera"
+                                   class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
 
-                                Eliminar
-
-                            </a>
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.IdCarrera"
+                                   class="btn btn-danger btn-sm">
+                                    Eliminar
+                                </a>
+                            }
 
                         </td>
 

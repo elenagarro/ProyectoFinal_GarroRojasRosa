@@ -276,12 +276,22 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("bit");
 
+                    b.Property<int>("IdCarrera")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdDocente")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("IdCurso");
+
+                    b.HasIndex("IdCarrera");
+
+                    b.HasIndex("IdDocente");
 
                     b.ToTable("Cursos");
                 });
@@ -293,6 +303,18 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDocente"));
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Especialidad")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -312,6 +334,9 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstudiante"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Correo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -326,6 +351,8 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
 
                     b.HasKey("IdEstudiante");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("IdCarrera");
 
                     b.ToTable("Estudiantes");
@@ -339,13 +366,23 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMatricula"));
 
-                    b.Property<int>("IdCarrera")
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaMatricula")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdCurso")
                         .HasColumnType("int");
 
                     b.Property<int>("IdEstudiante")
                         .HasColumnType("int");
 
                     b.HasKey("IdMatricula");
+
+                    b.HasIndex("IdCurso");
+
+                    b.HasIndex("IdEstudiante");
 
                     b.ToTable("Matriculas");
                 });
@@ -401,7 +438,7 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProyectoFinal_GarroRojasRosa.Models.Estudiante", b =>
+            modelBuilder.Entity("ProyectoFinal_GarroRojasRosa.Models.Curso", b =>
                 {
                     b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Carrera", "Carrera")
                         .WithMany()
@@ -409,7 +446,49 @@ namespace ProyectoFinal_GarroRojasRosa.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Docente", "Docente")
+                        .WithMany()
+                        .HasForeignKey("IdDocente");
+
                     b.Navigation("Carrera");
+
+                    b.Navigation("Docente");
+                });
+
+            modelBuilder.Entity("ProyectoFinal_GarroRojasRosa.Models.Estudiante", b =>
+                {
+                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Carrera", "Carrera")
+                        .WithMany()
+                        .HasForeignKey("IdCarrera")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Carrera");
+                });
+
+            modelBuilder.Entity("ProyectoFinal_GarroRojasRosa.Models.Matricula", b =>
+                {
+                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Curso", "Curso")
+                        .WithMany()
+                        .HasForeignKey("IdCurso")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal_GarroRojasRosa.Models.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("IdEstudiante")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Curso");
+
+                    b.Navigation("Estudiante");
                 });
 #pragma warning restore 612, 618
         }

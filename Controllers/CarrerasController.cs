@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal_GarroRojasRosa.Data;
@@ -15,12 +16,14 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         }
 
         // GET: Carreras
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Carreras.ToListAsync());
         }
 
         // GET: Carreras/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,6 +43,7 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         }
 
         // GET: Carreras/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
@@ -48,6 +52,7 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         // POST: Carreras/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("IdCarrera,Nombre,Descripcion,Estado")] Carrera carrera)
         {
             if (ModelState.IsValid)
@@ -61,6 +66,7 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         }
 
         // GET: Carreras/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,6 +87,7 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         // POST: Carreras/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id, [Bind("IdCarrera,Nombre,Descripcion,Estado")] Carrera carrera)
         {
             if (id != carrera.IdCarrera)
@@ -114,6 +121,7 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         }
 
         // GET: Carreras/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +143,7 @@ namespace ProyectoFinal_GarroRojasRosa.Controllers
         // POST: Carreras/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var carrera = await _context.Carreras.FindAsync(id);

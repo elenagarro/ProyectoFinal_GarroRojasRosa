@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ProyectoFinal_GarroRojasRosa.Models.Matricula>
+
+@{
+    ViewData["Title"] = "Gestión de Matrículas";
+}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Gestión de Matrículas</h3>
+    </div>
+
+    <div class="card-body">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+                No hay matrículas registradas actualmente.
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover table-striped align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Curso</th>
+                        <th>Carrera</th>
+                        <th>Fecha de Matrícula</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @if (item.Estudiante != null)
+                                {
+                                    @item.Estudiante.Nombre
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.Curso != null)
+                                {
+                                    @item.Curso.Nombre
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.Curso?.Carrera != null)
+                                {
+                                    @item.Curso.Carrera.Nombre
+                                }
+                            </td>
+
+                            <td>
+                                @item.FechaMatricula.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td>
+                                @if (item.Estado)
+                                {
+                                    <span class="badge bg-success">
+                                        Activa
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        Cancelada
+                                    </span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+
+    </div>
+
+</div>

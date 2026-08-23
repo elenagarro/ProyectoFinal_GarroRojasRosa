@@ -1,0 +1,77 @@
+@model ProyectoFinal_GarroRojasRosa.Models.Docente
+
+@{
+    ViewData["Title"] = "Detalles del Docente";
+}
+
+<div class="card shadow">
+
+    <div class="card-header bg-info text-white">
+        <h3 class="mb-0">Detalles del Docente</h3>
+    </div>
+
+    <div class="card-body">
+
+        <dl class="row">
+
+            <dt class="col-sm-3">
+                Nombre
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Nombre
+            </dd>
+
+            <dt class="col-sm-3">
+                Correo
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Correo
+            </dd>
+
+            <dt class="col-sm-3">
+                Especialidad
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Especialidad
+            </dd>
+
+            <dt class="col-sm-3">
+                Estado
+            </dt>
+            <dd class="col-sm-9">
+
+                @if (Model.Estado)
+                {
+                    <span class="badge bg-success">
+                        Activo
+                    </span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">
+                        Inactivo
+                    </span>
+                }
+
+            </dd>
+
+        </dl>
+
+        <div class="d-flex gap-2 mt-4">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.IdDocente"
+               class="btn btn-warning">
+                Editar
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Regresar
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -14,12 +14,13 @@
 
                 <img src="~/images/logo.jpg"
                      width="80"
-                     class="rounded-circle mb-3" />
+                     class="rounded-circle mb-3"
+                     alt="Logo del sistema" />
 
                 <h2>Sistema de Matrícula Universitaria</h2>
 
                 <p class="mb-0">
-                    Crear una nueva cuenta
+                    Crear una nueva cuenta de estudiante
                 </p>
 
             </div>
@@ -72,6 +73,7 @@
 
                         <label asp-for="Email"
                                class="form-label fw-bold">
+                            Correo electrónico
                         </label>
 
                         <input asp-for="Email"
@@ -86,8 +88,32 @@
 
                     <div class="mb-3">
 
+                        <label asp-for="IdCarrera"
+                               class="form-label fw-bold">
+                            Carrera
+                        </label>
+
+                        <select asp-for="IdCarrera"
+                                class="form-select"
+                                asp-items="ViewBag.IdCarrera">
+
+                            <option value="">
+                                Seleccione una carrera
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="IdCarrera"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
                         <label asp-for="Password"
                                class="form-label fw-bold">
+                            Contraseña
                         </label>
 
                         <input asp-for="Password"
@@ -104,6 +130,7 @@
 
                         <label asp-for="ConfirmPassword"
                                class="form-label fw-bold">
+                            Confirmar contraseña
                         </label>
 
                         <input asp-for="ConfirmPassword"
@@ -132,7 +159,8 @@
                     ¿Ya tiene una cuenta?
 
                     <a asp-controller="Account"
-                       asp-action="Login">
+                       asp-action="Login"
+                       class="fw-bold text-decoration-none">
 
                         Iniciar sesión
 

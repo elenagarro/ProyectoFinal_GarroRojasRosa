@@ -4,23 +4,27 @@ namespace ProyectoFinal_GarroRojasRosa.Models
 {
     public class RegisterViewModel
     {
-        [Required]
-        public string Nombre { get; set; } = "";
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
+        public string Nombre { get; set; } = string.Empty;
 
-        [Required]
-        public string Apellido { get; set; } = "";
+        [Required(ErrorMessage = "El apellido es obligatorio.")]
+        public string Apellido { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "El correo es obligatorio.")]
         [EmailAddress]
-        public string Email { get; set; } = "";
+        public string Email { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Debe seleccionar una carrera.")]
+        [Display(Name = "Carrera")]
+        public int IdCarrera { get; set; }
+
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = "";
+        public string Password { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Debe confirmar la contraseña.")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
-        public string ConfirmPassword { get; set; } = "";
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

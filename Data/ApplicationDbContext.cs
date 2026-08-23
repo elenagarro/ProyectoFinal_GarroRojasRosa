@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal_GarroRojasRosa.Models;
 
@@ -17,5 +16,25 @@ namespace ProyectoFinal_GarroRojasRosa.Data
         public DbSet<Estudiante> Estudiantes { get; set; }
         public DbSet<Docente> Docentes { get; set; }
         public DbSet<Matricula> Matriculas { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // RELACIÓN MATRÍCULA - ESTUDIANTE
+            // Evita múltiples rutas de eliminación en cascada.
+            modelBuilder.Entity<Matricula>()
+                .HasOne(m => m.Estudiante)
+                .WithMany()
+                .HasForeignKey(m => m.IdEstudiante)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // RELACIÓN MATRÍCULA - CURSO
+            modelBuilder.Entity<Matricula>()
+                .HasOne(m => m.Curso)
+                .WithMany()
+                .HasForeignKey(m => m.IdCurso)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

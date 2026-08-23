@@ -10,5 +10,15 @@ namespace ProyectoFinal_GarroRojasRosa.Models
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [StringLength(100)]
         public string Nombre { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "El correo es obligatorio")]
+        [EmailAddress(ErrorMessage = "Ingrese un correo válido")]
+        public string Correo { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La especialidad es obligatoria")]
+        [StringLength(100)]
+        public string Especialidad { get; set; } = string.Empty;
+
+        public bool Estado { get; set; } = true;
     }
 }
